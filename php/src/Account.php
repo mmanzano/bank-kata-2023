@@ -18,7 +18,7 @@ class Account
 
     public function withdraw(int $amount): void
     {
-        throw new Exception('Not Implement');
+        $this->balance->substractAmount($amount);
     }
 
     public function printStatement(): void

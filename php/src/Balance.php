@@ -17,4 +17,9 @@ class Balance
     {
         $this->amount += $amount;
     }
+
+    public function substractAmount(int $amount)
+    {
+        $this->amount -= $amount;
+    }
 }

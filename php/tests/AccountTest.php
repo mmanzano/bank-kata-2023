@@ -39,4 +39,27 @@ RESULT;
 
         self::assertEquals(1000, $balance->getAmount());
     }
+
+    /** @test */
+    public function it_can_make_two_deposits()
+    {
+        $balance = new Balance(0);
+        $account = new Account($balance);
+
+        $account->deposit(1000);
+        $account->deposit(500);
+
+        self::assertEquals(1500, $balance->getAmount());
+    }
+
+    /** @test */
+    public function it_can_make_two_withdraws() {
+        $balance = new Balance(500);
+        $account = new Account($balance);
+
+        $account->withdraw(100);
+        $account->withdraw(100);
+
+        self::assertEquals(300, $balance->getAmount());
+    }
 }
