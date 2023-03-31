@@ -7,8 +7,10 @@ use Kata\Balance;
 
 class Account
 {
-    public function __construct(private Balance $balance)
-    {
+    public function __construct(
+        private Balance $balance,
+        private Printer $printer
+    ) {
     }
 
     public function deposit(int $amount): void
@@ -23,6 +25,6 @@ class Account
 
     public function printStatement(): void
     {
-        throw new Exception('Not Implement');
+        $this->printer->print('');
     }
 }

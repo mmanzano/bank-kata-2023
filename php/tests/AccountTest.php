@@ -4,10 +4,13 @@ namespace KataTests;
 
 use Kata\Account;
 use Kata\Balance;
+use Kata\Printer;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class AccountTest extends TestCase
 {
+    use ProphecyTrait;
     /** @test */
     public function acceptance_criteria(): void
     {
@@ -33,7 +36,7 @@ RESULT;
     public function it_can_make_a_deposit()
     {
         $balance = new Balance(0);
-        $account = new Account($balance);
+        $account = new Account($balance, new Printer());
 
         $account->deposit(1000);
 
@@ -44,7 +47,7 @@ RESULT;
     public function it_can_make_two_deposits()
     {
         $balance = new Balance(0);
-        $account = new Account($balance);
+        $account = new Account($balance, new Printer());
 
         $account->deposit(1000);
         $account->deposit(500);
@@ -55,11 +58,25 @@ RESULT;
     /** @test */
     public function it_can_make_two_withdraws() {
         $balance = new Balance(500);
-        $account = new Account($balance);
+        $account = new Account($balance, new Printer());
 
         $account->withdraw(100);
         $account->withdraw(100);
 
         self::assertEquals(300, $balance->getAmount());
+    }
+
+    /** @test */
+    public function it_can_print_empty_statement()
+    {
+        $printer = $this->prophesize(Printer::class);
+        $account = new Account(
+            new Balance(10),
+            $printer->reveal()
+        );
+
+        $account->printStatement();
+
+        $printer->print('')->shouldHaveBeenCalled();
     }
 }
