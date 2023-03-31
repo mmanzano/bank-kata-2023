@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  php_bank_kata:
+    container_name: php_bank_kata
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    image: php_bank_kata
+    user: 1000:1000
+    volumes:
+      - .:/usr/src/app
